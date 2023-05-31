@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CrmAssistant.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230527112550_InitialCreate")]
+    [DbContext(typeof(PubContext))]
+    [Migration("20230531091020_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -28,19 +28,15 @@ namespace CrmAssistant.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Country")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("PostalCode")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("UserId")
@@ -64,12 +60,10 @@ namespace CrmAssistant.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Lastname")
-                        .IsRequired()
+                    b.Property<string>("Firstname")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
+                    b.Property<string>("Lastname")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Password")

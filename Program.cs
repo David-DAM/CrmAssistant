@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 string connString = builder.Configuration.GetConnectionString("DefaultConnection");
-//ApplicationDbContext
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(connString, ServerVersion.AutoDetect(connString)));
+
+builder.Services.AddDbContext<PubContext>(options => options.UseMySql(connString, ServerVersion.AutoDetect(connString)));
 
 var app = builder.Build();
 
@@ -20,8 +20,9 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+//app.UseAuthentication();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",

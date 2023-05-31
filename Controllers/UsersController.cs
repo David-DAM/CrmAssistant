@@ -11,9 +11,9 @@ namespace CrmAssistant.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly PubContext _context;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(PubContext context)
         {
             _context = context;
         }
@@ -23,7 +23,7 @@ namespace CrmAssistant.Controllers
         {
               return _context.Users != null ? 
                           View(await _context.Users.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Users'  is null.");
+                          Problem("Entity set 'PubContext.Users'  is null.");
         }
 
         // GET: Users/Details/5
@@ -34,7 +34,8 @@ namespace CrmAssistant.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+            var user = await _context.Users
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
@@ -54,7 +55,7 @@ namespace CrmAssistant.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Lastname,Email,Password")] User user)
+        public async Task<IActionResult> Create(User user)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +74,10 @@ namespace CrmAssistant.Controllers
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users
+                .Include(x => x.Address)
+                .Where(x => x.Id == id)
+                .SingleAsync();
             if (user == null)
             {
                 return NotFound();
@@ -86,7 +90,7 @@ namespace CrmAssistant.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Lastname,Email,Password")] User user)
+        public async Task<IActionResult> Edit(int id, User user)
         {
             if (id != user.Id)
             {
@@ -141,7 +145,7 @@ namespace CrmAssistant.Controllers
         {
             if (_context.Users == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Users'  is null.");
+                return Problem("Entity set 'PubContext.Users'  is null.");
             }
             var user = await _context.Users.FindAsync(id);
             if (user != null)
