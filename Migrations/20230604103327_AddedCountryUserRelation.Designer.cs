@@ -3,6 +3,7 @@ using System;
 using CrmAssistant.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrmAssistant.Migrations
 {
     [DbContext(typeof(PubContext))]
-    partial class PubContextModelSnapshot : ModelSnapshot
+    [Migration("20230604103327_AddedCountryUserRelation")]
+    partial class AddedCountryUserRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

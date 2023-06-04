@@ -1,4 +1,5 @@
 ﻿@model CrmAssistant.Models.User
+@using CrmAssistant.Models.Enums
 
 @{
     ViewData["Title"] = "Edit";
@@ -11,50 +12,117 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#user" type="button"
+                role="tab" aria-controls="user" aria-selected="true">User</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#address" type="button"
+                role="tab" aria-controls="address" aria-selected="false">Address</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="hobbie-tab" data-bs-toggle="tab" data-bs-target="#hobbie" type="button" 
+                role="tab" aria-controls="hobbie" aria-selected="false">Hobbies</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="countries-tab" data-bs-toggle="tab" data-bs-target="#countries" type="button"
+                        role="tab" aria-controls="countries" aria-selected="false">Countries visited</button>
+            </li>
+        </ul>
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             @if (Model.Address != null) { <input type="hidden" asp-for="Address.Id" /> }
-            <div class="form-group">
-                <label asp-for="Firstname" class="control-label"></label>
-                <input asp-for="Firstname" class="form-control" />
-                <span asp-validation-for="Firstname" class="text-danger"></span>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="user" role="tabpanel" aria-labelledby="user-tab">
+                    <div class="form-group">
+                        <label asp-for="Firstname" class="control-label"></label>
+                        <input asp-for="Firstname" class="form-control" />
+                        <span asp-validation-for="Firstname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Lastname" class="control-label"></label>
+                        <input asp-for="Lastname" class="form-control" />
+                        <span asp-validation-for="Lastname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Role" class="control-label"></label>
+                        <select asp-for="Role" class="form-control" asp-items="Html.GetEnumSelectList<Role>()">
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="address" role="tabpanel" aria-labelledby="address-tab">
+                    <div class="form-group">
+                        <label asp-for="Address.Street" class="control-label"></label>
+                        <input asp-for="Address.Street" class="form-control" />
+                        <span asp-validation-for="Address.Street" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address.PostalCode" class="control-label"></label>
+                        <input asp-for="Address.PostalCode" class="form-control" />
+                        <span asp-validation-for="Address.PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address.City" class="control-label"></label>
+                        <input asp-for="Address.City" class="form-control" />
+                        <span asp-validation-for="Address.City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address.Country" class="control-label"></label>
+                        <input asp-for="Address.Country" class="form-control" />
+                        <span asp-validation-for="Address.Country" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="hobbie" role="tabpanel" aria-labelledby="hobbie-tab">Algo</div>
+                <div class="tab-pane fade" id="countries" role="tabpanel" aria-labelledby="countries-tab">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var country in Model.Countries)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => country.Name)
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger" asp-action="Index">Eliminar</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <form asp-action="Create">
+                        <div class="form-group">
+                            <label asp-for="Countries" class="control-label"></label>
+                            <input asp-for="Countries" class="form-control" />
+                            <span asp-validation-for="Countries" class="text-danger"></span>
+                        </div>
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Lastname" class="control-label"></label>
-                <input asp-for="Lastname" class="form-control" />
-                <span asp-validation-for="Lastname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address.Street" class="control-label"></label>
-                <input asp-for="Address.Street" class="form-control" />
-                <span asp-validation-for="Address.Street" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address.PostalCode" class="control-label"></label>
-                <input asp-for="Address.PostalCode" class="form-control" />
-                <span asp-validation-for="Address.PostalCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address.City" class="control-label"></label>
-                <input asp-for="Address.City" class="form-control" />
-                <span asp-validation-for="Address.City" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address.Country" class="control-label"></label>
-                <input asp-for="Address.Country" class="form-control" />
-                <span asp-validation-for="Address.Country" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

@@ -26,6 +26,28 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                         </li>
                     </ul>
+                    @if (!Context.User.Identity.IsAuthenticated)
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Register">Register</a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Profile">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
+                            </li>
+                        </ul>
+                    }
                 </div>
             </div>
         </nav>

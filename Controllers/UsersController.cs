@@ -6,9 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CrmAssistant.Models;
+using Microsoft.AspNetCore.Authorization;
+using CrmAssistant.Middlewares;
+using System.Dynamic;
 
 namespace CrmAssistant.Controllers
 {
+    [Authorize]
+    [MiddlewareFilter(typeof(AdminMiddleware))]
     public class UsersController : Controller
     {
         private readonly PubContext _context;
@@ -21,9 +26,9 @@ namespace CrmAssistant.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-              return _context.Users != null ? 
-                          View(await _context.Users.ToListAsync()) :
-                          Problem("Entity set 'PubContext.Users'  is null.");
+            return _context.Users != null ?
+                        View(await _context.Users.ToListAsync()) :
+                        Problem("Entity set 'PubContext.Users'  is null.");
         }
 
         // GET: Users/Details/5
@@ -36,6 +41,7 @@ namespace CrmAssistant.Controllers
 
             var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (user == null)
             {
                 return NotFound();
@@ -76,8 +82,14 @@ namespace CrmAssistant.Controllers
 
             var user = await _context.Users
                 .Include(x => x.Address)
+                .Include(x => x.Countries)
                 .Where(x => x.Id == id)
                 .SingleAsync();
+
+            //dynamic models = new ExpandoObject();
+            //models.User = user;
+            //models.Country = new Country();
+
             if (user == null)
             {
                 return NotFound();
@@ -152,14 +164,14 @@ namespace CrmAssistant.Controllers
             {
                 _context.Users.Remove(user);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(int id)
         {
-          return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

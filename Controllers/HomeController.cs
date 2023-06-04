@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 namespace CrmAssistant.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
