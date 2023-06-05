@@ -12,7 +12,7 @@ namespace CrmAssistant.Models
         public string? City { get; set; }
         public string? PostalCode { get; set; }
         public string? Country { get; set; }
-        [ForeignKey("UserId")]
+        public int UserId { get; set; }
         public User? User { get; set; }
 
     }

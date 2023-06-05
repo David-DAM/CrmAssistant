@@ -87,7 +87,7 @@
                 </div>
                 <div class="tab-pane fade" id="hobbie" role="tabpanel" aria-labelledby="hobbie-tab">Algo</div>
                 <div class="tab-pane fade" id="countries" role="tabpanel" aria-labelledby="countries-tab">
-                    <table class="table">
+                    <table class="table" id="tableCountries">
                         <thead>
                             <tr>
                                 <th>
@@ -106,20 +106,20 @@
                                         @Html.DisplayFor(modelItem => country.Name)
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger" asp-action="Index">Eliminar</button>
+                                        <input value="Delete" type="button" onclick="deleteCountry(@country.Id)" class="btn btn-danger" />
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    <form asp-action="Create">
-                        <div class="form-group">
-                            <label asp-for="Countries" class="control-label"></label>
-                            <input asp-for="Countries" class="form-control" />
-                            <span asp-validation-for="Countries" class="text-danger"></span>
-                        </div>
-                        <input type="submit" value="Save" class="btn btn-primary" />
-                    </form>
+                    
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <input required class="form-control" id="name" />
+                        <input type="hidden" id="userId" asp-for="Id" />
+                    </div>
+                    <input type="button" onclick="addCountry()" class="btn btn-primary" value="Save" />
+                    
                 </div>
             </div>
             
@@ -136,4 +136,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/Users/Edit.js"></script>
 }

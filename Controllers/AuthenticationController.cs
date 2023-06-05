@@ -49,7 +49,7 @@ namespace CrmAssistant.Controllers
                 {
                     new Claim(ClaimTypes.Name, user.Email),
                     //new Claim("FullName", user.FullName),
-                    new Claim(ClaimTypes.Role, Role.ADMINISTRATOR.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role.ToString()),
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

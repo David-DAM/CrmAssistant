@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CrmAssistant.Models.Enums;
+using System.Net;
 
 namespace CrmAssistant.Middlewares
 {
@@ -27,7 +28,7 @@ namespace CrmAssistant.Middlewares
 
             if (role != Role.ADMINISTRATOR.ToString())
             {
-                throw new UnauthorizedAccessException();//httpContext.Response.Redirect("/")
+                context.Response.Redirect("/Home");
             }
 
             await next(context);

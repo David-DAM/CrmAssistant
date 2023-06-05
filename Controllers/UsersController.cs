@@ -86,10 +86,6 @@ namespace CrmAssistant.Controllers
                 .Where(x => x.Id == id)
                 .SingleAsync();
 
-            //dynamic models = new ExpandoObject();
-            //models.User = user;
-            //models.Country = new Country();
-
             if (user == null)
             {
                 return NotFound();
@@ -159,7 +155,9 @@ namespace CrmAssistant.Controllers
             {
                 return Problem("Entity set 'PubContext.Users'  is null.");
             }
+
             var user = await _context.Users.FindAsync(id);
+
             if (user != null)
             {
                 _context.Users.Remove(user);
