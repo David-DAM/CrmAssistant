@@ -1,0 +1,19 @@
+﻿
+@using CrmAssistant.Models.Enums
+
+@if(TempData[Notification.ERROR.ToString()] != null){
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.error('@TempData[Notification.ERROR.ToString()]');
+    </script>
+}
+
+@if (TempData[Notification.SUCCESS.ToString()] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData[Notification.SUCCESS.ToString()]');
+    </script>
+}

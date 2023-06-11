@@ -23,5 +23,6 @@ namespace CrmAssistant.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<Hobbie> Hobbies { get; set; }
     }
 }
